@@ -171,8 +171,6 @@ const handleClick = (e) => {
     height: 100px;
     line-height: 100px;
     text-align: center;
-
-    text-align: center;
   }
 }
 </style>
