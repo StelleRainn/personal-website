@@ -62,7 +62,8 @@ const router = createRouter({
         },
         { path: 'chasing-rain-beta-1', component: () => import('@/views/playground/single/ChasingRainBeta1.vue') },
         { path: 'chasing-rain-beta-2', component: () => import('@/views/playground/single/ChasingRainBeta2.vue') },
-        { path: 'continual-gradient', component: () => import('@/views/playground/single/ContinualGradient.vue') }
+        { path: 'continual-gradient', component: () => import('@/views/playground/single/ContinualGradient.vue') },
+        { path: 'drag-and-drop-01', component: () => import('@/views/playground/single/DragAndDrop01.vue') }
       ]
     },
     {

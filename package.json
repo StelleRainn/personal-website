@@ -24,9 +24,11 @@
     "@element-plus/icons-vue": "^2.3.2",
     "element-plus": "^2.11.3",
     "pinia": "^3.0.3",
+    "react-dnd-html5-backend": "^16.0.1",
     "scss": "^0.2.4",
     "vue": "^3.5.18",
-    "vue-router": "^4.5.1"
+    "vue-router": "^4.5.1",
+    "vue3-dnd": "^2.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.31.0",
