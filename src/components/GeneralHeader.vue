@@ -66,6 +66,9 @@ const navigateTo = (path) => {
               <el-dropdown-item>
                 <el-link :underline="false" @click="navigateTo('/playground/drag-and-drop-01')">拖拽 1</el-link>
               </el-dropdown-item>
+              <el-dropdown-item>
+                <el-link :underline="false" @click="navigateTo('/playground/drag-and-drop-02')">拖拽 2</el-link>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
