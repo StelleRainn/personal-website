@@ -14,8 +14,10 @@ const drop = (e) => {
 </script>
 
 <template>
+  <h1 style="margin-top: 100px; text-align: center">
+    最基础的 drag and drop，使用 draggable， dragstart、dragover、drop
+  </h1>
   <div class="box">
-    <p>最基础的 drag and drop，使用 draggable， dragstart、dragover、drop</p>
     <div class="drag" draggable="true" @dragstart="drag">拖我</div>
     <div class="drop" @dragover="(e) => e.preventDefault()" @drop="drop">
       已接受数据 {{ dropData }}, 存放次数: {{ dropCounts }}
