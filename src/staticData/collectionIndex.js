@@ -11,6 +11,7 @@ import shoppingMallGalleryBg from '@/assets/images/shoppingMall/shoppingMallGall
 import xtxGalleryBg from '@/assets/images/xtx/xtxGalleryBg.png'
 import weraceGalleryBg from '@/assets/images/werace/weraceGalleryBg.png'
 import bilibiliGalleryBg from '@/assets/images/bilibili/bilibiliGalleryBg.png'
+import acirGalleryBg from '@/assets/images/general/dawnbreak-cover.png'
 
 export const headerContents = ref([
   { imgUrl: rosaLogo, name: '蔷薇丛的小书架', routerName: 'bookshelf' },
@@ -60,5 +61,12 @@ export const galleryListContents = ref([
     name: 'B站首页复刻',
     desc: '一位前端工程师的起点之作',
     onlineUrl: 'https://stellerainn.github.io/bilibili-imitation/'
+  },
+  {
+    id: 6,
+    imgUrl: acirGalleryBg,
+    name: 'A Clock Inside The Rose',
+    desc: 'Vue 3 + Spring Boot + MySQL 的全栈效率中心与毕业设计作品',
+    onlineUrl: 'http://39.101.77.156/dashboard'
   }
 ])

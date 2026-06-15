@@ -5,19 +5,13 @@ import { ElMessage } from 'element-plus'
 import { ElMessageBox } from 'element-plus'
 
 const props = defineProps({
-  id: Number || String,
+  id: [Number, String],
   imgUrl: String,
   routerName: String,
   onlineUrl: String
 })
 
-const onVisit = () => {
-  router.push({
-    name: props.routerName
-  })
-}
-
-const onExperence = () => {
+const openOnlineUrl = () => {
   if (props.onlineUrl) {
     ElMessageBox.confirm('即将访问外部链接，是否继续', '提示', {
       confirmButtonText: '是',
@@ -40,6 +34,21 @@ const onExperence = () => {
     })
   }
 }
+
+const onVisit = () => {
+  if (props.routerName) {
+    router.push({
+      name: props.routerName
+    })
+    return
+  }
+
+  openOnlineUrl()
+}
+
+const onExperence = () => {
+  openOnlineUrl()
+}
 </script>
 
 <template>
@@ -53,7 +62,7 @@ const onExperence = () => {
     </div>
     <div class="button-group">
       <el-button type="primary" plain round size="large" @click="onVisit">
-        了解更多
+        {{ props.routerName ? '了解更多' : '访问作品' }}
         <el-icon><ArrowRight /></el-icon>
       </el-button>
       <el-button type="primary" round size="large" @click="onExperence">在线体验</el-button>

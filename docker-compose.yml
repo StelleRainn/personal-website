@@ -1,0 +1,30 @@
+services:
+  personal-website:
+    image: crpi-wwifswyqz8bp8ddb.cn-wulanchabu.personal.cr.aliyuncs.com/stellerainn/personal-website:frontend-latest
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: personal-website
+    restart: always
+    expose:
+      - "80"
+    networks:
+      - portfolio-public
+
+  portfolio-gateway:
+    image: nginx:1.27-alpine
+    container_name: portfolio-gateway
+    restart: always
+    depends_on:
+      - personal-website
+    ports:
+      - "80:80"
+    volumes:
+      - ./deploy/edge-nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - portfolio-public
+
+networks:
+  portfolio-public:
+    external: true
