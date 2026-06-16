@@ -16,6 +16,15 @@ rose.example.com                         -> A Clock Inside The Rose
 
 如果暂时没有域名，入口 Nginx 的默认站点会把未匹配的 Host 指向个人网站；毕业设计仍建议通过子域名访问，避免把 Vue history 路由和 API 前缀放到同一个 IP 路径下互相影响。
 
+当前尚未购买域名时，采用临时 IP-only 路径入口：
+
+```text
+http://39.101.77.156/                 -> personal-website
+http://39.101.77.156/acir/dashboard   -> A Clock Inside The Rose
+```
+
+该方案要求毕业设计前端以 `VITE_PUBLIC_BASE_URL=/acir/` 构建。未来购买域名后，建议重新将毕业设计前端构建基准切回 `/`，并使用 `rose.your-domain.cn` 访问。
+
 ## 2. 目标架构
 
 ```text
@@ -97,6 +106,8 @@ docker compose up -d
 入口网关会监听宿主机 80 端口：
 
 - 默认 Host 进入个人网站。
+- `/acir/` 临时进入毕业设计，适用于只有公网 IP、没有域名的阶段。
+- `/api/` 临时转发给毕业设计，适配 ACIR 当前 axios baseURL。
 - `rose.example.com` 或 `acir.example.com` 进入毕业设计。
 
 上线前需要将 `deploy/edge-nginx.conf` 中的示例域名替换为真实域名。

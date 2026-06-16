@@ -67,6 +67,6 @@ export const galleryListContents = ref([
     imgUrl: acirGalleryBg,
     name: 'A Clock Inside The Rose',
     desc: 'Vue 3 + Spring Boot + MySQL 的全栈效率中心与毕业设计作品',
-    onlineUrl: 'http://39.101.77.156/dashboard'
+    onlineUrl: 'http://39.101.77.156/acir/dashboard'
   }
 ])

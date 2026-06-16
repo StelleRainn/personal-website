@@ -11,3 +11,9 @@
 - Docker 补充验证：个人站 `nginx.conf` 与统一入口 `deploy/edge-nginx.conf` 均通过容器内 `nginx -t`；`docker compose build personal-website` 成功构建 `linux/amd64` 镜像。
 - 容器冒烟验证：临时运行个人站镜像到本机 `18080` 端口，`/home` 与 `/collection` 均返回 `200 OK`，Vue Router history 模式刷新 fallback 正常。
 - 构建观察：Docker 构建时 npm registry 下载速度较慢，后续可考虑在 Dockerfile 中配置更稳定的 registry 以缩短构建时间。
+
+## 2026-06-15 IP-only 临时入口适配
+
+- 在统一入口 Nginx 中增加 `/acir/` 路径代理，使暂未购买域名时可以通过 `http://39.101.77.156/acir/dashboard` 访问毕业设计。
+- 将 `/api/` 与 `/backgrounds/` 临时转发给 ACIR 前端容器，适配 ACIR 当前接口基准路径与 public 背景资源路径。
+- 更新个人站作品集中的 ACIR 在线入口，从根路径 `/dashboard` 调整为 `/acir/dashboard`。
