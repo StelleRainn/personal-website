@@ -22,3 +22,5 @@
 
 - 修复 `/acir/assets/*` 被入口网关错误代理为 ACIR `index.html` 的问题。原因是变量形式的 `proxy_pass` 携带尾部 `/` 时，上游 URI 被固定替换为根路径。
 - 在 `/acir/` location 中先通过 `rewrite` 移除路径前缀，再使用不携带 URI 的变量 `proxy_pass`，确保 `/acir/assets/app.js` 正确转发为 ACIR 容器内的 `/assets/app.js`。
+- 浏览器复检确认公网页面已正常挂载 Vue，页面 DOM 与视觉内容完整，控制台无错误。此前白屏浏览器可能缓存了错误响应但资源文件名没有变化。
+- 增加缓存策略：ACIR HTML 路由使用 `no-cache`，带内容哈希的 `/acir/assets/*` 使用一年期 immutable 缓存，避免 HTML 与静态资源采用相同的启发式缓存行为。
