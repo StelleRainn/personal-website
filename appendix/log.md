@@ -17,3 +17,8 @@
 - 在统一入口 Nginx 中增加 `/acir/` 路径代理，使暂未购买域名时可以通过 `http://39.101.77.156/acir/dashboard` 访问毕业设计。
 - 将 `/api/` 与 `/backgrounds/` 临时转发给 ACIR 前端容器，适配 ACIR 当前接口基准路径与 public 背景资源路径。
 - 更新个人站作品集中的 ACIR 在线入口，从根路径 `/dashboard` 调整为 `/acir/dashboard`。
+
+## 2026-06-23 ACIR 静态资源代理修复
+
+- 修复 `/acir/assets/*` 被入口网关错误代理为 ACIR `index.html` 的问题。原因是变量形式的 `proxy_pass` 携带尾部 `/` 时，上游 URI 被固定替换为根路径。
+- 在 `/acir/` location 中先通过 `rewrite` 移除路径前缀，再使用不携带 URI 的变量 `proxy_pass`，确保 `/acir/assets/app.js` 正确转发为 ACIR 容器内的 `/assets/app.js`。
