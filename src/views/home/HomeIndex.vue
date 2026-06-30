@@ -3,6 +3,7 @@ import { ref, computed } from 'vue'
 import { ArrowDown } from '@element-plus/icons-vue'
 
 import HeroBanner from '@/views/home/components/HeroBanner.vue'
+import DawnBreakBanner from './components/DawnBreakBanner.vue'
 import ResumeBanner from './components/ResumeBanner.vue'
 import PrimeBanner from './components/PrimeBanner.vue'
 import SubBanner from './components/SubBanner.vue'
@@ -45,6 +46,9 @@ const handleClick = (e) => {
         <el-anchor-link href="#banner4">
           <el-icon size="50"><ArrowDown /></el-icon>
         </el-anchor-link>
+        <el-anchor-link href="#banner5">
+          <el-icon size="50"><ArrowDown /></el-icon>
+        </el-anchor-link>
       </el-anchor>
     </div>
     <el-main class="home-container-main">
@@ -61,13 +65,16 @@ const handleClick = (e) => {
             </el-carousel-item>
           </el-carousel>
         </section>
-        <section id="banner2" class="resume-banner">
+        <section id="banner2" class="dawn-break-banner">
+          <DawnBreakBanner></DawnBreakBanner>
+        </section>
+        <section id="banner3" class="resume-banner">
           <ResumeBanner></ResumeBanner>
         </section>
-        <section id="banner3" class="prime-banner">
+        <section id="banner4" class="prime-banner">
           <PrimeBanner></PrimeBanner>
         </section>
-        <section id="banner4" class="sub-banner">
+        <section id="banner5" class="sub-banner">
           <SubBanner v-for="(item, index) in subBannerList" :key="index" :itemInfo="item">
             <template #main-title>{{ item.mainTitle }}</template>
             <template #sub-title>{{ item.subTitle }}</template>
@@ -153,6 +160,12 @@ const handleClick = (e) => {
     margin-top: 10px;
     height: 700px;
   }
+
+  .dawn-break-banner {
+    margin-top: 10px;
+    height: 700px;
+  }
+
   .prime-banner {
     margin-top: 10px;
     height: 700px;

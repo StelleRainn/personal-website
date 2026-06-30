@@ -1,5 +1,13 @@
 # 修改日志
 
+## 2026-06-30 首页“黎明已至”Banner
+
+- 在首页 `HeroBanner` 与 `ResumeBanner` 之间新增独立的“黎明已至”大 Banner，背景使用 `src/assets/images/general/dawn-break-banner.png`。
+- 新增 `DawnBreakBanner` 组件，采用 dawn 背景图、晨光遮罩、文字淡入和底部“走 / 向 / 黎 / 明”浮动动效，呼应 `PrimeBanner` 的“走进雨中”表达。
+- 更新首页 section 与侧边锚点顺序，使新增 Banner 位于第二屏，原 Resume、Prime、Sub Banner 顺延。
+- 点击跳转暂未接入；副主题文案当前为临时文案：“长夜将尽，晨光正从地平线醒来。”
+- 验证结果：`./node_modules/.bin/vite build`、定向 ESLint、Prettier check 与 `git diff --check` 通过；当前沙箱监听本地端口时返回 `listen EPERM`，因此未能启动 Vite dev server。
+
 ## 2026-06-08 云主机多站点入口迁移
 
 - 创建 `appendix/cloud_migration_plan.md`，明确个人网站作为门面、毕业设计作为作品子集的云主机部署方案。
