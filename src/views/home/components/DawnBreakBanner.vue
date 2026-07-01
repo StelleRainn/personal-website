@@ -1,15 +1,23 @@
 <script setup>
+import { useRouter } from 'vue-router'
+
 import dawnBreakBanner from '@/assets/images/general/dawn-break-banner.png'
+
+const router = useRouter()
 
 const backgroundImage = [
   'linear-gradient(90deg, rgba(7, 16, 25, 0.72), rgba(7, 16, 25, 0.24) 48%, rgba(255, 210, 142, 0.12))',
   'linear-gradient(180deg, rgba(2, 8, 14, 0.18), rgba(2, 8, 14, 0.36))',
   `url(${dawnBreakBanner})`
 ].join(', ')
+
+const onVisiting = () => {
+  router.push({ name: 'dawnbreak' })
+}
 </script>
 
 <template>
-  <div class="main-container">
+  <div class="main-container" @click="onVisiting">
     <div class="background-layer" :style="{ backgroundImage }"></div>
     <div class="light-sweep"></div>
     <div class="content-layer">
@@ -17,14 +25,13 @@ const backgroundImage = [
         <p class="eyebrow">Dawn Break</p>
         <h1 class="main-title">黎明已至</h1>
         <p class="subtitle">长夜将尽，晨光正从地平线醒来。</p>
-        <div class="bottom-titles">
-          <p>走</p>
-          <p>/</p>
-          <p>向</p>
-          <p>/</p>
-          <p>黎</p>
-          <p>/</p>
-          <p>明</p>
+        <div class="bottom-titles" aria-label="走向黎明">
+          <span class="trail-line"></span>
+          <span class="dawn-word" style="--index: 0">走</span>
+          <span class="dawn-word" style="--index: 1">向</span>
+          <span class="dawn-word" style="--index: 2">黎</span>
+          <span class="dawn-word" style="--index: 3">明</span>
+          <span class="trail-line"></span>
         </div>
       </div>
     </div>
@@ -38,6 +45,7 @@ const backgroundImage = [
   position: relative;
   overflow: hidden;
   background-color: #0d1820;
+  cursor: pointer;
 
   .background-layer {
     position: absolute;
@@ -100,40 +108,62 @@ const backgroundImage = [
 
     .bottom-titles {
       display: flex;
+      align-items: center;
       justify-content: center;
       margin-top: 110px;
-      font-size: 35px;
+      gap: 18px;
 
-      p {
-        margin: 0 10px;
+      .trail-line {
+        width: 96px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(255, 239, 204, 0.95), transparent);
+        opacity: 0;
+        transform: scaleX(0.2);
+        animation: lineBreath 4.8s ease-in-out infinite;
       }
 
-      p:nth-child(1) {
-        animation: floating 1.5s linear infinite alternate forwards;
-      }
+      .dawn-word {
+        position: relative;
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(255, 240, 204, 0.36);
+        border-radius: 50%;
+        background:
+          radial-gradient(circle at 50% 14%, rgba(255, 241, 195, 0.32), transparent 48%), rgba(255, 255, 255, 0.04);
+        box-shadow:
+          inset 0 0 20px rgba(255, 224, 174, 0.08),
+          0 0 22px rgba(255, 204, 128, 0.1);
+        font-size: 29px;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateY(20px) rotate(-8deg);
+        animation:
+          glyphRise 0.9s cubic-bezier(0.2, 0.72, 0.25, 1) calc(1.25s + var(--index) * 0.16s) forwards,
+          glyphPulse 3.8s ease-in-out calc(2.1s + var(--index) * 0.2s) infinite;
 
-      p:nth-child(2) {
-        animation: floating 1.5s linear 0.2s infinite alternate forwards;
-      }
+        &::before {
+          content: '';
+          position: absolute;
+          inset: -45%;
+          background: conic-gradient(
+            from 120deg,
+            transparent,
+            rgba(255, 242, 204, 0.12),
+            rgba(255, 242, 204, 0.65),
+            transparent 38%
+          );
+          animation: haloRotate 5.5s linear infinite;
+        }
 
-      p:nth-child(3) {
-        animation: floating 1.5s linear 1.5s infinite alternate forwards;
-      }
-
-      p:nth-child(4) {
-        animation: floating 1.5s linear 0.6s infinite alternate forwards;
-      }
-
-      p:nth-child(5) {
-        animation: floating 1.5s linear infinite alternate forwards;
-      }
-
-      p:nth-child(6) {
-        animation: floating 1.5s linear 0.8s infinite alternate forwards;
-      }
-
-      p:nth-child(7) {
-        animation: floating 1.5s linear 1.5s infinite alternate forwards;
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 8px;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 240, 204, 0.18);
+        }
       }
     }
   }
@@ -150,15 +180,50 @@ const backgroundImage = [
   }
 }
 
-@keyframes floating {
-  to {
-    transform: translateY(-5px);
-  }
-}
-
 @keyframes slowBreath {
   to {
     transform: scale(1.08);
+  }
+}
+
+@keyframes glyphRise {
+  to {
+    opacity: 1;
+    transform: translateY(0) rotate(0deg);
+  }
+}
+
+@keyframes glyphPulse {
+  0%,
+  100% {
+    box-shadow:
+      inset 0 0 20px rgba(255, 224, 174, 0.08),
+      0 0 22px rgba(255, 204, 128, 0.1);
+    transform: translateY(0);
+  }
+  50% {
+    box-shadow:
+      inset 0 0 24px rgba(255, 230, 190, 0.18),
+      0 0 34px rgba(255, 208, 134, 0.34);
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes haloRotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes lineBreath {
+  0%,
+  100% {
+    opacity: 0.18;
+    transform: scaleX(0.45);
+  }
+  50% {
+    opacity: 0.92;
+    transform: scaleX(1);
   }
 }
 
@@ -203,10 +268,16 @@ const backgroundImage = [
       }
 
       .bottom-titles {
-        font-size: 28px;
+        gap: 10px;
 
-        p {
-          margin: 0 6px;
+        .trail-line {
+          width: 44px;
+        }
+
+        .dawn-word {
+          width: 42px;
+          height: 42px;
+          font-size: 23px;
         }
       }
     }

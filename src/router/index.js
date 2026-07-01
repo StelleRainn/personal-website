@@ -17,6 +17,7 @@ const router = createRouter({
     { path: '/resume', name: 'resume', component: () => import('@/views/resume/ResumeIndex.vue') },
     { path: '/collection', name: 'collectionIndex', component: () => import('@/views/collection/CollectionIndex.vue') },
     { path: '/chasing-rain', name: 'chasing-rain', component: () => import('@/views/chasingRain/ChasingRain.vue') },
+    { path: '/dawnbreak', name: 'dawnbreak', component: () => import('@/views/dawnbreak/DawnBreak.vue') },
     { path: '/rosa', name: 'rosa', component: () => import('@/views/rosa/Rosa.vue') },
     { path: '/reform-create', name: 'reform-create', component: () => import('@/views/reformCreate/ReformCreate.vue') },
     { path: '/contact', name: 'contact', component: () => import('@/views/contact/Contact.vue') },

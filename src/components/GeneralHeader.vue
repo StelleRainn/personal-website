@@ -150,4 +150,27 @@ header {
     }
   }
 }
+
+@media (max-width: 760px) {
+  header {
+    justify-content: flex-start;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    ul {
+      width: max-content;
+      min-width: 100%;
+      justify-content: flex-start;
+
+      li {
+        flex: 0 0 auto;
+
+        .el-link,
+        .el-dropdown-link {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+}
 </style>

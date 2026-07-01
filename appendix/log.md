@@ -1,5 +1,14 @@
 # 修改日志
 
+## 2026-07-01 “黎明已至”导航界面样板
+
+- 升级首页 `DawnBreakBanner` 的底部“走向黎明”动效：从逐字浮动改为圆形字徽、旋转光晕、呼吸光线与分段入场动画，避免与 `PrimeBanner` 的“走进雨中”重复。
+- 为 `DawnBreakBanner` 接入点击跳转，新增 `/dawnbreak` 路由与 `src/views/dawnbreak/DawnBreak.vue`。
+- 新增“黎明已至”样板页：左侧可收纳故事抽屉、章节列表点击切换、主视图全屏展示文字与背景，滚轮/方向键/移动端滑动切换章节，并同步 URL hash：`#main`、`#embers`、`#rose`、`#horizon`。
+- 样板页暂用素材库中的 dawn、dawnbreak、rosa、playground 图片作为章节背景，后续可替换为正式故事素材。
+- 移动端补充：`/dawnbreak` 在窄屏默认收起抽屉；同时为全站顶部导航增加窄屏横向滚动与不换行保护，避免导航文字竖排压住页面。
+- 验证结果：`./node_modules/.bin/vite build`、定向 ESLint、Prettier check 与 `git diff --check` 通过；本地 `5173` 页面实测 Banner 点击进入 `/dawnbreak#main`、滚轮切至 `#embers`、向上回到 `#main`、抽屉收起/展开状态正常，并完成 390px 移动视口截图检查。
+
 ## 2026-06-30 首页“黎明已至”Banner
 
 - 在首页 `HeroBanner` 与 `ResumeBanner` 之间新增独立的“黎明已至”大 Banner，背景使用 `src/assets/images/general/dawn-break-banner.png`。
