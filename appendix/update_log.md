@@ -1,5 +1,22 @@
 # 修改日志
 
+## 2026-07-02 路由滚动复位去动效实验与复盘
+
+- 尝试移除 `src/styles/common.scss` 中挂在 `html` 根节点上的 `scroll-behavior: smooth`，目标是避免普通路由跳转时 Vue Router 的顶部复位被浏览器渲染成可见滚动动画，造成新页面底部内容先露出的“剧透”感。
+- 保留 `router/index.js` 中现有的滚动策略：普通路由跳转使用 `{ top: 0, left: 0, behavior: 'auto' }` 立即回到顶部；浏览器前进/后退继续使用 `savedPosition`；非 `/dawnbreak` 的 hash 锚点跳转仍单独使用 `behavior: 'smooth'`。
+- 机器验证结果：`./node_modules/.bin/vite build`、定向 ESLint、Prettier check 与 `git diff --check` 通过；本地 `5173` 实测从 `/project/bookshelf` 滚动到 `window.scrollY=10000` 后，通过站内菜单跳转 `/project/shopping-mall`，多次采样均保持 `scrollY=0`，首屏直接展示“智慧商城”顶部内容。
+- 人工复测结论：去掉全局 `scroll-behavior: smooth` 后，页面切换时出现更明显的闪帧与不自然的一闪而过画面，整体观感不如保留全局平滑滚动。因此当前保留 `html { scroll-behavior: smooth; }`，将本次尝试作为实验记录。
+- 后续方向：优先尝试重构长页面的滚动结构，让作品详情等长内容使用类似首页的内部滚动容器，减少不同路由共用 `window.scrollY` 时的滚动位置污染；必要时再配合路由过渡期间的隐藏式复位。
+
+## 2026-07-02 路由切换过渡与滚动复位
+
+- 参考 ACIR 前端 `/Users/rainn/Projects/a-clock-inside-the-rose/front-end/src/layout/MainLayout.vue` 的 `fade-transform` 实现，在 `App.vue` 中为路由切换接入同款轻量节奏：`opacity 0.3s ease` + `translateY(20px/-20px)`，避免页面切换像硬刷新。
+- 为兼容个人站部分多根页面，新增本地 `RoutePageShell` 单根包装层，让 `<transition name="fade-transform" mode="out-in">` 可以继续与 `keep-alive` 配合使用，避免 Vue 的 “non-element root node cannot be animated” 警告。
+- 移除 `router/index.js` 中每次导航都会出现的全屏 `ElLoading`，改由 `fade-transform` 动画承接页面切换反馈。
+- 优化滚动恢复策略：浏览器原生 `scrollRestoration` 改为 `manual`，Vue Router 对普通跳转回到顶部，对浏览器前进/后退保留 `savedPosition`，对非 `/dawnbreak` hash 继续支持锚点滚动。
+- 为首页内部滚动容器增加 `data-route-scroll-container` 标记；窗口滚动交给 Vue Router 的 `scrollBehavior` 处理，`App.vue` 只复位已标记的内部滚动容器，从而保留浏览器前进/后退的 `savedPosition` 空间。
+- 验证结果：`./node_modules/.bin/vite build`、定向 ESLint 与 Prettier check 通过；本地 `5173` 实测首页内部滚动至 `scrollTop=1600` 后切简历、再回首页时复位为 `0`；作品集 `windowY=900` 后切简历时新页面 `windowY=0`，且导航过程无 `.el-loading-mask`。
+
 ## 2026-07-01 “黎明已至”导航界面样板
 
 - 升级首页 `DawnBreakBanner` 的底部“走向黎明”动效：从逐字浮动改为圆形字徽、旋转光晕、呼吸光线与分段入场动画，避免与 `PrimeBanner` 的“走进雨中”重复。

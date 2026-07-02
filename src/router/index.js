@@ -1,15 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { ElLoading } from 'element-plus'
+
+if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual'
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
-    // 如果有保存的位置（比如浏览器前进后退），则返回保存的位置
     if (savedPosition) {
-      return savedPosition
+      return { ...savedPosition, behavior: 'auto' }
     }
-    // 否则滚动到页面顶部
-    return { top: 0 }
+
+    if (to.hash && to.path !== '/dawnbreak') {
+      return { el: to.hash, top: 0, behavior: 'smooth' }
+    }
+
+    return { top: 0, left: 0, behavior: 'auto' }
   },
   routes: [
     { path: '/', component: () => import('@/App.vue'), redirect: '/home' },
@@ -83,19 +89,6 @@ const router = createRouter({
       redirect: '/404'
     }
   ]
-})
-
-let loadingInstance = null
-
-router.beforeEach((to, from, next) => {
-  loadingInstance = ElLoading.service({ fullscreen: true })
-  next()
-})
-
-router.afterEach(() => {
-  if (loadingInstance) {
-    loadingInstance.close()
-  }
 })
 
 export default router

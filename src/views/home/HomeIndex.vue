@@ -52,7 +52,7 @@ const handleClick = (e) => {
       </el-anchor>
     </div>
     <el-main class="home-container-main">
-      <div class="anchor-ref" ref="containerRef">
+      <div class="anchor-ref" ref="containerRef" data-route-scroll-container>
         <section id="banner1" class="hero-banner">
           <!-- height 高度要和 hero-banner 一致 -->
           <el-carousel height="750px" :interval="5000" :pause-on-hover="true" arrow="hover">

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "appendix/面试指南.md",
-                "mode": "preview",
-                "source": true
+                "file": "appendix/update_log.md",
+                "mode": "source",
+                "source": false
               },
               "icon": "lucide-file",
-              "title": "面试指南"
+              "title": "update_log"
             }
           }
         ]
@@ -44,7 +44,7 @@
                 "autoReveal": false
               },
               "icon": "lucide-folder-closed",
-              "title": "Files"
+              "title": "文件列表"
             }
           },
           {
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 212.5,
-    "collapsed": true
+    "width": 212.5
   },
   "right": {
     "id": "27514fc4a45bcce7",
@@ -143,13 +142,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "appendix/面试指南.md",
+                "file": "appendix/update_log.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "面试指南 的大纲"
+              "title": "update_log 的大纲"
             }
           }
         ],
@@ -172,27 +171,30 @@
   },
   "active": "60dd470db4dca6ca",
   "lastOpenFiles": [
-    "src/views/notFound/NotFound.vue",
-    "src/views/notFound",
-    "dev_track/开发日志.md",
-    "src/components/GeneralIntroduction.vue",
-    "src/components/GeneralGallery.vue",
-    "src/views/projects/Bookshelf.vue",
-    "src/components/ProjectDetails.vue",
-    "src/assets/images/bookshelf.jpg",
-    "src/assets/images/Vue.js-removebg-preview.png",
-    "src/assets/images/vue-transparent.png",
-    "src/assets/images/vue-logo.svg",
-    "src/assets/images/Vue.js_Logo_2.svg",
-    "src/assets/fonts/NotoSans-Italic-VariableFont_wdth,wght.ttf",
-    "src/assets/fonts/NotoSans-VariableFont_wdth,wght.ttf",
-    "src/views/projects/Xtx.vue",
-    "src/views/projects/WeRace.vue",
-    "src/views/projects/ShoppingMall.vue",
-    "src/assets/images/xiaoju-1.jpeg",
-    "src/assets/images/8CEACD2B-1FA4-49BB-9EB8-BCCCFE4A796D_1_105_c.jpeg",
-    "src/assets/images/swagii-1.jpeg",
-    "src/assets/images/324B3425-3506-4FD2-8814-597ED62FE0EA_1_105_c.jpeg",
-    "src/assets/images/forest-1.jpeg"
+    "dist/assets/ChasingRainBeta2-CQkOg58S.js",
+    "dist/assets/NotFound-FDun0VSQ.js",
+    "dist/assets/WeRace-C-bIYZ6w.js",
+    "dist/assets/DragAndDrop01-JafI5x_F.js",
+    "dist/assets/notification--e3mcigz.js",
+    "dist/assets/DragAndDrop02-BDOswXgg.js",
+    "dist/assets/ContinualGradient-DnBZsZKG.js",
+    "dist/assets/ChasingRainBeta1-Cng-hAf-.js",
+    "dist/assets/scroll-B_NOvfSM.js",
+    "dist/assets/el-anchor-link-B6mtDzS9.js",
+    "dist/assets/el-main-TXP3jfIj.js",
+    "dist/assets/xtxResmBg-C5y3QF_V.png",
+    "dist/assets/xtxGalleryBg-6EZJmXkn.png",
+    "dist/assets/xtx-hero-banner-uw-CrxEap8V.png",
+    "dist/assets/xtx-down-Bnp1Q6g-.png",
+    "dist/assets/weraceResmBg-WG1qrv4a.png",
+    "dist/assets/weraceGalleryBg-WXLYsZtM.png",
+    "dist/assets/werace-hero-banner-uw-B0DNrj03.png",
+    "dist/assets/vuex-CTXnmElM.png",
+    "dist/assets/vuerouter4LogoPure1-ILfh6Ewp.png",
+    "dist/assets/vueRouter4Code-BNn2w5YM.png",
+    "appendix/interview_guide.md",
+    "appendix/dev_log.md",
+    "appendix/cloud_migration_plan.md",
+    "dev_track/开发日志.md"
   ]
 }
