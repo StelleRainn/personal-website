@@ -11,7 +11,6 @@ const goHome = () => {
 
 <template>
   <div class="not-found-page">
-    <div class="background-layer"></div>
     <div class="content-layer">
       <div class="content">
         <h1 class="title">404</h1>
@@ -33,13 +32,7 @@ const goHome = () => {
   position: relative;
   width: 100%;
   min-height: 100vh;
-
-  .background-layer {
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background: linear-gradient(135deg, #4bccef, #f47b2a);
-  }
+  background: linear-gradient(135deg, #4bccef, #f47b2a);
 
   .content-layer {
     position: relative;

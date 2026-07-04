@@ -4,6 +4,8 @@ if (typeof window !== 'undefined' && 'scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual'
 }
 
+const scrollShellMeta = { scrollShell: true }
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   scrollBehavior(to, from, savedPosition) {
@@ -20,13 +22,28 @@ const router = createRouter({
   routes: [
     { path: '/', component: () => import('@/App.vue'), redirect: '/home' },
     { path: '/home', name: 'home', component: () => import('@/views/home/HomeIndex.vue') },
-    { path: '/resume', name: 'resume', component: () => import('@/views/resume/ResumeIndex.vue') },
+    {
+      path: '/resume',
+      name: 'resume',
+      component: () => import('@/views/resume/ResumeIndex.vue'),
+      meta: scrollShellMeta
+    },
     { path: '/collection', name: 'collectionIndex', component: () => import('@/views/collection/CollectionIndex.vue') },
     { path: '/chasing-rain', name: 'chasing-rain', component: () => import('@/views/chasingRain/ChasingRain.vue') },
     { path: '/dawnbreak', name: 'dawnbreak', component: () => import('@/views/dawnbreak/DawnBreak.vue') },
-    { path: '/rosa', name: 'rosa', component: () => import('@/views/rosa/Rosa.vue') },
-    { path: '/reform-create', name: 'reform-create', component: () => import('@/views/reformCreate/ReformCreate.vue') },
-    { path: '/contact', name: 'contact', component: () => import('@/views/contact/Contact.vue') },
+    { path: '/rosa', name: 'rosa', component: () => import('@/views/rosa/Rosa.vue'), meta: scrollShellMeta },
+    {
+      path: '/reform-create',
+      name: 'reform-create',
+      component: () => import('@/views/reformCreate/ReformCreate.vue'),
+      meta: scrollShellMeta
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: () => import('@/views/contact/Contact.vue'),
+      meta: scrollShellMeta
+    },
     {
       // 忽略父组件，仅利用路由父子关系（4.1+特性）
       path: '/project',
@@ -34,27 +51,32 @@ const router = createRouter({
         {
           path: 'bookshelf', // 使用相对路径，url渲染结果为 /project/bookshelf
           name: 'bookshelf',
-          component: () => import('@/views/projects/Bookshelf.vue')
+          component: () => import('@/views/projects/Bookshelf.vue'),
+          meta: scrollShellMeta
         },
         {
           path: 'shopping-mall',
           name: 'shopping-mall',
-          component: () => import('@/views/projects/ShoppingMall.vue')
+          component: () => import('@/views/projects/ShoppingMall.vue'),
+          meta: scrollShellMeta
         },
         {
           path: 'xtx',
           name: 'xtx',
-          component: () => import('@/views/projects/Xtx.vue')
+          component: () => import('@/views/projects/Xtx.vue'),
+          meta: scrollShellMeta
         },
         {
           path: 'werace',
           name: 'werace',
-          component: () => import('@/views/projects/WeRace.vue')
+          component: () => import('@/views/projects/WeRace.vue'),
+          meta: scrollShellMeta
         },
         {
           path: 'bilibili',
           name: 'bilibili',
-          component: () => import('@/views/projects/Bilibili.vue')
+          component: () => import('@/views/projects/Bilibili.vue'),
+          meta: scrollShellMeta
         }
       ]
     },
@@ -77,12 +99,14 @@ const router = createRouter({
     {
       path: '/notification',
       name: 'notification',
-      component: () => import('@/views/notification/notification.vue')
+      component: () => import('@/views/notification/notification.vue'),
+      meta: scrollShellMeta
     },
     {
       path: '/404',
       name: 'not-found',
-      component: () => import('@/views/notFound/NotFound.vue')
+      component: () => import('@/views/notFound/NotFound.vue'),
+      meta: scrollShellMeta
     },
     {
       path: '/:pathMatch(.*)*',

@@ -2,7 +2,6 @@
 
 <template>
   <div class="temp">
-    <div class="background-layer"></div>
     <h1>崭新的黎明，近在咫尺。</h1>
   </div>
 </template>
@@ -12,6 +11,7 @@
   position: relative;
   width: 100%;
   height: 100vh;
+  background: linear-gradient(135deg, #4bccef, #f47b2a);
 
   h1 {
     // 彩色文字
@@ -24,16 +24,6 @@
     font-size: 64px;
     letter-spacing: 1rem;
     z-index: 1;
-  }
-
-  .background-layer {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background: linear-gradient(135deg, #4bccef, #f47b2a);
-    z-index: -1;
   }
 }
 </style>

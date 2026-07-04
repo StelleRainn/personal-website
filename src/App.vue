@@ -10,10 +10,24 @@ const RoutePageShell = defineComponent({
   props: {
     viewComponent: {
       required: true
+    },
+    useScrollShell: {
+      type: Boolean,
+      default: false
     }
   },
   setup(props) {
-    return () => h('div', { class: 'route-page-shell' }, [h(props.viewComponent)])
+    return () => {
+      const pageComponent = h(props.viewComponent)
+
+      if (!props.useScrollShell) {
+        return h('div', { class: 'route-page-shell' }, [pageComponent])
+      }
+
+      return h('div', { class: ['route-page-shell', 'route-page-shell--scroll'] }, [
+        h('div', { class: 'route-scroll-shell', 'data-route-scroll-container': '' }, [pageComponent])
+      ])
+    }
   }
 })
 
@@ -42,7 +56,12 @@ onMounted(() => {
     <router-view v-slot="{ Component, route }">
       <transition name="fade-transform" mode="out-in" @before-enter="resetRouteScroll">
         <keep-alive>
-          <RoutePageShell v-if="Component" :key="route.path" :view-component="Component" />
+          <RoutePageShell
+            v-if="Component"
+            :key="route.path"
+            :view-component="Component"
+            :use-scroll-shell="Boolean(route.meta.scrollShell)"
+          />
         </keep-alive>
       </transition>
     </router-view>
@@ -53,6 +72,24 @@ onMounted(() => {
 .route-viewport,
 .route-page-shell {
   min-height: 100vh;
+}
+
+.route-page-shell--scroll,
+.route-scroll-shell {
+  height: 100vh;
+}
+
+.route-page-shell--scroll {
+  min-height: 100vh;
+  overflow: hidden;
+  background: #f3f3f3;
+}
+
+.route-scroll-shell {
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
 }
 
 .fade-transform-enter-active,

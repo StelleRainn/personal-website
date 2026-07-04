@@ -7,7 +7,7 @@ const onVisit = () => {
 <template>
   <div class="temp">
     <img src="@/assets/images/shoppingMall/github-logo.png" alt="" @click="onVisit" />
-    <el-link href="https://github.com/StelleRainn" type="default" underline="never">StelleRainn Rosa Mizukawa</el-link>
+    <el-link href="https://github.com/StelleRainn" type="default" underline="never">时雨蔷薇 · StelleRainn</el-link>
     <p>Can also mail to: 3298257615@qq.com or super123keng@gmail.com</p>
   </div>
 </template>

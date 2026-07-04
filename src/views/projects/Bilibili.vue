@@ -2,7 +2,6 @@
 import { ArrowDown } from '@element-plus/icons-vue'
 import { ref } from 'vue'
 
-import GeneralHeader from '@/components/GeneralHeader.vue'
 import GeneralGallery from '@/components/GeneralGallery.vue'
 import GeneralIntroduction from '@/components/GeneralIntroduction.vue'
 
@@ -12,7 +11,6 @@ const featureListRef = ref(null)
 </script>
 
 <template>
-  <GeneralHeader></GeneralHeader>
   <div class="main-container">
     <section id="welcome">
       <div class="background-layer"></div>
@@ -51,7 +49,7 @@ const featureListRef = ref(null)
 
 <style lang="scss" scoped>
 .main-container {
-  height: 100%;
+  min-height: 100%;
   width: 100%;
   background: #fff !important;
 }
