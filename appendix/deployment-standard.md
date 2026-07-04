@@ -182,10 +182,30 @@ bilibili-imitation -> 纯静态，无构建 base
 
 ## 7. 构建、推送、上线流程
 
+### 7.0 代码源与镜像源
+
+当前维护时要同时确认两条链路：
+
+```text
+代码链路：本地仓库 -> GitHub -> Gitee 同步 -> ECS git pull
+镜像链路：本地 docker compose build -> 阿里云镜像仓库 push -> ECS docker compose pull
+```
+
+注意：
+
+- 本机开发仍以 GitHub remote 为主要提交目标。
+- ECS 当前实际拉取的是 Gitee 代码源，因此本地推送 GitHub 后，还需要在 Gitee 完成同步。
+- ECS 上执行 `git pull` 前，先确认 Gitee 已经同步到本地最新 commit。
+- 如果公网页面仍出现旧链接、旧文案或旧 Nginx 路由，优先检查 Gitee 是否同步、ECS 是否拉到最新 commit、对应镜像是否已重新 pull/up。
+- 镜像仓库与代码仓库互相独立：代码最新不代表容器镜像最新，镜像最新也不代表 ECS 上的 gateway 配置最新。
+
 ### 7.1 本机构建并推送个人网站
 
 ```bash
 cd /Users/rainn/Projects/personal-website
+git status -sb
+git push origin main
+# 在 Gitee 控制台或镜像仓库同步功能中同步 personal-website
 docker compose build personal-website
 docker compose push personal-website
 ```
@@ -194,6 +214,9 @@ docker compose push personal-website
 
 ```bash
 cd /Users/rainn/Projects/a-clock-inside-the-rose
+git status -sb
+git push origin main
+# 如果 ECS 对应项目从 Gitee 拉取，也需要先完成 Gitee 同步
 docker compose build
 docker compose push
 ```
@@ -204,6 +227,8 @@ docker compose push
 
 ```bash
 cd /Users/rainn/Projects/<project>
+git status -sb
+git push origin main
 docker compose build
 docker compose push
 ```
@@ -233,6 +258,7 @@ git clone https://github.com/StelleRainn/bilibili-imitation.git
 
 ```bash
 cd /opt/<project>
+git remote -v
 git pull
 docker compose pull
 docker compose up -d
@@ -242,6 +268,7 @@ docker compose up -d
 
 ```bash
 cd /opt/a-clock-inside-the-rose
+git remote -v
 git pull
 docker compose pull
 docker compose up -d
@@ -251,6 +278,7 @@ docker compose up -d
 
 ```bash
 cd /opt/personal-website
+git remote -v
 git pull
 docker compose pull personal-website
 docker compose up -d
@@ -313,6 +341,7 @@ server_name stellerainn.com www.stellerainn.com _;
 
 ```bash
 cd /opt/personal-website
+git remote -v
 git pull
 docker compose up -d --force-recreate --no-deps portfolio-gateway
 docker exec portfolio-gateway nginx -t
@@ -413,6 +442,7 @@ docker network inspect portfolio-public
 
 ```bash
 docker exec portfolio-gateway nginx -t
+docker exec portfolio-gateway nginx -T | grep -E 'rosa-bookshelf|shopping-mall|xiaotuxian|bilibili|acir'
 ```
 
 检查个人总站：
@@ -436,6 +466,26 @@ Content-Type: application/javascript
 ```
 
 如果返回 `text/html`，说明路径代理又把资源请求误转成了 `index.html`，需要优先检查 `deploy/edge-nginx.conf` 中 `/acir/assets/` 的 rewrite 与 proxy_pass。
+
+检查子项目入口：
+
+```bash
+curl -I http://39.101.77.156/rosa-bookshelf/
+curl -I http://39.101.77.156/shopping-mall/
+curl -I http://39.101.77.156/xiaotuxian-pc/
+curl -I http://39.101.77.156/bilibili-imitation/
+```
+
+如果上述路径返回的仍是个人站 HTML 或作品按钮仍跳旧 URL，按顺序检查：
+
+```text
+1. 本地是否已 commit 并 push 到 GitHub
+2. Gitee 是否已同步到该 commit
+3. ECS 对应目录 git pull 后是否到最新 commit
+4. 本地是否已 docker compose build && docker compose push
+5. ECS 是否已 docker compose pull && docker compose up -d
+6. 入口网关是否已重建并通过 nginx -t
+```
 
 ## 11. 回滚原则
 
@@ -464,3 +514,98 @@ docker compose up -d --force-recreate --no-deps portfolio-gateway
   https://help.aliyun.com/zh/icp-filing/basic-icp-service/support/for-the-record-process-faq
 - 阿里云网站添加备案号 FAQ
   https://help.aliyun.com/zh/icp-filing/basic-icp-service/support/website-to-add-the-record-number-faq
+
+## 13. 日常维护速查
+
+### 13.1 只改个人站内容或作品链接
+
+本机：
+
+```bash
+cd /Users/rainn/Projects/personal-website
+git status -sb
+git add <changed-files>
+git commit -m "<message>"
+git push origin main
+# 同步 Gitee personal-website
+docker compose build personal-website
+docker compose push personal-website
+```
+
+ECS：
+
+```bash
+cd /opt/personal-website
+git pull
+docker compose pull personal-website
+docker compose up -d --force-recreate --no-deps personal-website
+```
+
+### 13.2 只改入口网关
+
+本机：
+
+```bash
+cd /Users/rainn/Projects/personal-website
+git add deploy/edge-nginx.conf appendix/update_log.md
+git commit -m "<message>"
+git push origin main
+# 同步 Gitee personal-website
+```
+
+ECS：
+
+```bash
+cd /opt/personal-website
+git pull
+docker compose up -d --force-recreate --no-deps portfolio-gateway
+docker exec portfolio-gateway nginx -t
+```
+
+### 13.3 只改某个作品子项目
+
+本机：
+
+```bash
+cd /Users/rainn/Projects/<project>
+git status -sb
+git add <changed-files>
+git commit -m "<message>"
+git push origin main
+# 如果 ECS 从 Gitee 拉取该项目，也同步 Gitee
+docker compose build
+docker compose push
+```
+
+ECS：
+
+```bash
+cd /opt/<project>
+git pull
+docker compose pull
+docker compose up -d
+```
+
+### 13.4 改 ACIR
+
+本机：
+
+```bash
+cd /Users/rainn/Projects/a-clock-inside-the-rose
+git status -sb
+git add <changed-files>
+git commit -m "<message>"
+git push origin main
+# 按 ECS 代码源同步 Gitee
+docker compose build
+docker compose push
+```
+
+ECS：
+
+```bash
+cd /opt/a-clock-inside-the-rose
+git pull
+docker compose pull
+docker compose up -d
+```

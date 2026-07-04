@@ -1,5 +1,12 @@
 # 修改日志
 
+## 2026-07-04 Gitee 同步链路与维护手册整理
+
+- 复盘本次线上旧链接问题：ECS 实际从 Gitee 拉取 `personal-website` 代码，本地推送 GitHub 后若 Gitee 未同步，ECS `git pull` 仍会得到旧网关与旧前端配置。
+- 更新 `appendix/deployment-standard.md`，明确代码链路为“本地仓库 -> GitHub -> Gitee 同步 -> ECS git pull”，镜像链路为“本地 build -> 阿里云镜像仓库 push -> ECS pull/up”。
+- 补充日常维护速查：分别覆盖个人站内容、入口网关、作品子项目、ACIR 的本地提交/构建/推送与 ECS 拉取/重启流程。
+- 补充线上排障顺序：旧链接、旧路由或旧页面优先检查 GitHub commit、Gitee 同步、ECS commit、镜像 pull/up 与 gateway Nginx 配置。
+
 ## 2026-07-04 作品子项目统一容器化接入
 
 - 合并部署日志体系：删除临时新增的 `appendix/log.md`，后续部署、域名、网关与普通内容更新均简要记录在 `appendix/update_log.md`。
