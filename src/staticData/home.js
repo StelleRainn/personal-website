@@ -18,7 +18,7 @@ export const projectsList = ref([
     bgUrl: bookshelfHeroBanner,
     name: '蔷薇丛的小书架',
     desc: '从组合式 API 到 Pinia 持久化， 广泛实践 Vue 3基础',
-    onlineUrl: 'https://bookshlef-vue3-demo.vercel.app/',
+    onlineUrl: '/rosa-bookshelf/',
     textTheme: '#fff'
   },
   {
@@ -27,7 +27,7 @@ export const projectsList = ref([
     bgUrl: shoppingMallHeroBanner,
     name: '智慧商城',
     desc: '基于 SPA 设计，广泛实践 Vue 2 基础',
-    onlineUrl: 'https://shoppingmall-seven.vercel.app/',
+    onlineUrl: '/shopping-mall/',
     textTheme: '#000'
   },
   {
@@ -36,7 +36,7 @@ export const projectsList = ref([
     bgUrl: xtxHerobanner,
     name: '小兔鲜儿',
     desc: '基础不牢，地动山摇 —— 纯 H5C3 实践项目',
-    onlineUrl: 'https://stellerainn.github.io/xiaotuxian-pc/',
+    onlineUrl: '/xiaotuxian-pc/',
     textTheme: '#000'
   },
   {
@@ -54,7 +54,7 @@ export const projectsList = ref([
     bgUrl: bilibiliHeroBanner,
     name: 'B站首页复刻',
     desc: '一位前端工程师的起点之作',
-    onlineUrl: 'https://stellerainn.github.io/bilibili-imitation/',
+    onlineUrl: '/bilibili-imitation/',
     textTheme: '#000'
   }
 ])

@@ -1,5 +1,22 @@
 # 修改日志
 
+## 2026-07-04 作品子项目统一容器化接入
+
+- 合并部署日志体系：删除临时新增的 `appendix/log.md`，后续部署、域名、网关与普通内容更新均简要记录在 `appendix/update_log.md`。
+- 扩展统一入口网关：新增 `/rosa-bookshelf/`、`/shopping-mall/`、`/xiaotuxian-pc/`、`/bilibili-imitation/` 四个作品路径，分别代理到同名前端容器。
+- 将首页与作品合集中的可在线体验链接改为同源路径，避免从 Vercel 或 GitHub Pages 跳出；公网 IP 与未来域名都可复用同一批链接。
+- 更新 `appendix/deployment-standard.md`，补充四个作品子项目的镜像、路径、构建推送、ECS 拉取上线规范。
+- 子项目 Docker 构建统一使用 Nginx 托管前端产物；Vue 项目构建阶段使用 npmmirror registry，`shopping-mall` 因旧 Vue2 依赖树在容器内采用 `npm ci --legacy-peer-deps`。
+- 补充 ECS 首次接入四个子项目时的 `/opt` 下 `git clone` 命令，后续日常更新仍保持 `git pull`、`docker compose pull`、`docker compose up -d`。
+
+## 2026-07-04 部署标准手册与域名接入规划
+
+- 新增 `appendix/deployment-standard.md`，整理个人网站、ACIR 与后续作品的统一容器化部署规范。
+- 部署、域名、网关与容器化相关变更统一记录在 `appendix/update_log.md`。
+- 记录已购买域名 `stellerainn.com` 后的第一阶段接入策略：主域名与 `www` 指向 ECS 公网 IP，ACIR 暂继续通过 `/acir/dashboard` 路径访问，子域名入口留到后续再做。
+- 将 `deploy/edge-nginx.conf` 的主站 `server_name` 从示例域名更新为 `stellerainn.com www.stellerainn.com _`，保留公网 IP 默认入口。
+- 依据阿里云官方文档补充域名实名认证、DNS A 记录、ICP备案、备案号悬挂与 HTTPS 后置处理的操作顺序。
+
 ## 2026-07-02 路由滚动复位去动效实验与复盘
 
 - 尝试移除 `src/styles/common.scss` 中挂在 `html` 根节点上的 `scroll-behavior: smooth`，目标是避免普通路由跳转时 Vue Router 的顶部复位被浏览器渲染成可见滚动动画，造成新页面底部内容先露出的“剧透”感。

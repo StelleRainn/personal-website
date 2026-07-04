@@ -28,7 +28,7 @@ export const galleryListContents = ref([
     imgUrl: bookshelfGalleryBg,
     name: '蔷薇丛的小书架',
     desc: '从组合式 API 到 Pinia 持久化， 广泛实践 Vue 3基础',
-    onlineUrl: 'https://bookshlef-vue3-demo.vercel.app/'
+    onlineUrl: '/rosa-bookshelf/'
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ export const galleryListContents = ref([
     imgUrl: shoppingMallGalleryBg,
     name: '智慧商城',
     desc: '基于 SPA 设计，广泛实践 Vue 2 基础',
-    onlineUrl: 'https://shoppingmall-seven.vercel.app/'
+    onlineUrl: '/shopping-mall/'
   },
   {
     id: 3,
@@ -44,7 +44,7 @@ export const galleryListContents = ref([
     imgUrl: xtxGalleryBg,
     name: '小兔鲜儿',
     desc: '基础不牢，地动山摇 —— 纯 H5C3 实践项目',
-    onlineUrl: 'https://stellerainn.github.io/xiaotuxian-pc/'
+    onlineUrl: '/xiaotuxian-pc/'
   },
   {
     id: 4,
@@ -60,13 +60,13 @@ export const galleryListContents = ref([
     imgUrl: bilibiliGalleryBg,
     name: 'B站首页复刻',
     desc: '一位前端工程师的起点之作',
-    onlineUrl: 'https://stellerainn.github.io/bilibili-imitation/'
+    onlineUrl: '/bilibili-imitation/'
   },
   {
     id: 6,
     imgUrl: acirGalleryBg,
     name: 'A Clock Inside The Rose',
     desc: 'Vue 3 + Spring Boot + MySQL 的全栈效率中心与毕业设计作品',
-    onlineUrl: 'http://39.101.77.156/acir/dashboard'
+    onlineUrl: '/acir/dashboard'
   }
 ])
