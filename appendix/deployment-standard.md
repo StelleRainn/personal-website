@@ -1,9 +1,11 @@
 # Portfolio Deployment Standard
 
-> 日期：2026-07-04
+> 日期：2026-07-09
 > 适用范围：个人网站、A Clock Inside The Rose，以及后续作为作品集子项目接入的前端或全栈项目。
-> 当前公网入口：`http://39.101.77.156/`
-> 已购买域名：`stellerainn.com`
+> 当前主入口：`http://stellerainn.com/`
+> 备用公网入口：`http://39.101.77.156/`
+> 已备案域名：`stellerainn.com`
+> ICP 备案号：`桂ICP备2026014459号`，审核通过日期：2026-07-08
 
 ## 1. 总原则
 
@@ -327,6 +329,12 @@ dig www.stellerainn.com +short
 
 返回 `39.101.77.156` 即表示解析方向正确。DNS 生效受 TTL、本地缓存和运营商缓存影响，通常需要等待数分钟。
 
+当前状态：
+
+- `stellerainn.com` 已添加 A 记录，指向 `39.101.77.156`。
+- `www.stellerainn.com` 已添加 A 记录，指向 `39.101.77.156`。
+- 本机命令与浏览器访问均已验证通过。
+
 ### 8.3 网关域名配置
 
 解析完成后，入口网关建议使用：
@@ -347,11 +355,22 @@ docker compose up -d --force-recreate --no-deps portfolio-gateway
 docker exec portfolio-gateway nginx -t
 ```
 
-### 8.4 ICP 备案判断
+### 8.4 ICP 备案状态
 
-当前 ECS 位于中国内地节点时，通过域名对外提供网站服务需要先完成 ICP 备案。备案完成前，建议继续把公网 IP 作为主要可访问入口，不要把 `stellerainn.com` 作为正式公开入口。
+当前 ECS 位于中国内地节点时，通过域名对外提供网站服务需要完成 ICP 备案。`stellerainn.com` 已于 2026-07-08 通过工信部 ICP 备案审核。
 
-备案大致路径：
+```text
+备案/许可证编号：桂ICP备2026014459号
+审核通过日期：2026-07-08
+```
+
+个人站首页底部需要展示该备案号，并链接到工信部备案查询网站：
+
+```text
+https://beian.miit.gov.cn/
+```
+
+历史备案路径：
 
 ```text
 域名实名认证
@@ -373,20 +392,23 @@ docker exec portfolio-gateway nginx -t
 
 不要把它描述成商业服务、在线交易、论坛社区、新闻媒体或需要前置审批的业务。
 
-### 8.5 HTTPS 后置
+### 8.5 后续合规与 HTTPS
 
-HTTPS 建议放在域名解析和 ICP 备案之后处理。
+ICP备案通过后，后续还有两个事项：
 
-可选方案：
+1. 在网站开通后 30 日内完成公安联网备案。
+2. 在域名访问稳定后接入 HTTPS。
+
+HTTPS 可选方案：
 
 - Nginx + Certbot：保留当前 gateway，新增证书挂载和 `443` server。
 - Caddy：未来将 gateway 替换为 Caddy，自动申请和续期证书。
 - 阿里云 SSL/CDN：将 HTTPS 放到阿里云边缘产品，ECS 仍作为源站。
 
-当前阶段推荐先完成：
+当前阶段推荐推进：
 
 ```text
-公网 IP 稳定 -> 域名实名 -> ICP 备案 -> DNS 正式切换 -> HTTPS
+公安联网备案 -> HTTPS 证书接入 -> HTTP 自动跳转 HTTPS
 ```
 
 ## 9. 新项目接入清单

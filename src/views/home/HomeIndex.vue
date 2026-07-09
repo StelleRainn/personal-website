@@ -81,7 +81,12 @@ const handleClick = (e) => {
           </SubBanner>
         </section>
         <section id="footer">
-          <footer class="home-footer">Copyright © 2025 水川雨蔷薇. 保留所有权利。</footer>
+          <footer class="home-footer">
+            <p>Copyright © 2025 - 现在 时雨蔷薇（StelleRainn）. 保留所有权利。</p>
+            <a class="icp-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+              桂ICP备2026014459号
+            </a>
+          </footer>
         </section>
       </div>
     </el-main>
@@ -181,9 +186,30 @@ const handleClick = (e) => {
   }
 
   .home-footer {
-    height: 100px;
-    line-height: 100px;
+    min-height: 100px;
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
     text-align: center;
+    line-height: 1.6;
+    color: #606266;
+
+    p {
+      margin: 0;
+    }
+
+    .icp-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: #409eff;
+      }
+    }
   }
 }
 </style>

@@ -1,5 +1,16 @@
 # 修改日志
 
+## 2026-07-09
+
+### 域名与 ICP 备案正式接入
+
+- `stellerainn.com` 与 `www.stellerainn.com` 已完成 DNS A 记录解析，均指向 ECS 公网 IP `39.101.77.156`。
+- 工信部 ICP 备案已通过审核，备案号为 `桂ICP备2026014459号`，审核通过日期为 2026-07-08。
+- 首页底部新增 ICP 备案号展示，并链接至工信部备案查询网站 `https://beian.miit.gov.cn/`。
+- 将 pnpm 构建脚本授权配置迁移到 `pnpm-workspace.yaml`，适配 pnpm 11 不再读取 `package.json` 中 `pnpm.onlyBuiltDependencies` 的变化。
+- 更新部署维护手册，将域名状态从“备案前规划”改为“备案已通过后的维护状态”，并记录后续待办：公安联网备案与 HTTPS 接入。
+- 改动文件：`src/views/home/HomeIndex.vue`、`src/staticData/notification.js`、`Dockerfile`、`package.json`、`pnpm-workspace.yaml`、`appendix/deployment-standard.md`、`appendix/update_log.md`
+
 ## 2026-07-04
 
 ### 路由滚动体验重构

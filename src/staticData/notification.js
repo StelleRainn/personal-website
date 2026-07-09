@@ -8,6 +8,29 @@ export const notificationHero = ref({
 
 export const updateLog = ref([
   {
+    date: '2026-07-09',
+    sections: [
+      {
+        title: '域名与 ICP 备案正式接入',
+        items: [
+          'stellerainn.com 与 www.stellerainn.com 已通过 A 记录解析到 ECS 公网入口。',
+          '工信部 ICP 备案已于 2026-07-08 审核通过，首页底部新增备案号链接。',
+          '同步迁移 pnpm 构建脚本授权配置，适配 pnpm 11 的工作区配置读取方式。',
+          '后续维护重点转为公安联网备案与 HTTPS 证书接入。'
+        ],
+        files: [
+          'src/views/home/HomeIndex.vue',
+          'src/staticData/notification.js',
+          'Dockerfile',
+          'package.json',
+          'pnpm-workspace.yaml',
+          'appendix/deployment-standard.md',
+          'appendix/update_log.md'
+        ]
+      }
+    ]
+  },
+  {
     date: '2026-07-04',
     sections: [
       {
