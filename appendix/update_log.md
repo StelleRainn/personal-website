@@ -1,5 +1,15 @@
 # 修改日志
 
+## 2026-07-30
+
+### 公安联网备案正式接入
+
+- 公安联网备案已审核通过，备案号为 `桂公网安备45012402000043号`。
+- 首页底部新增公安备案图标与查询链接，与 ICP 备案信息并列展示。
+- 原始备案图标和链接代码归档于 `appendix/public_security/`，前端使用的图标副本位于 `src/assets/public-security-record.png`。
+- 更新部署维护手册，将公安联网备案标记为已完成；后续部署重点转为 HTTPS 证书接入与 HTTP 自动跳转。
+- 改动文件：`src/views/home/HomeIndex.vue`、`src/assets/public-security-record.png`、`src/staticData/notification.js`、`appendix/public_security/*`、`appendix/deployment-standard.md`、`appendix/update_log.md`
+
 ## 2026-07-09
 
 ### 域名与 ICP 备案正式接入

@@ -83,9 +83,20 @@ const handleClick = (e) => {
         <section id="footer">
           <footer class="home-footer">
             <p>Copyright © 2025 - 现在 时雨蔷薇（StelleRainn）. 保留所有权利。</p>
-            <a class="icp-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
-              桂ICP备2026014459号
-            </a>
+            <div class="filing-links">
+              <a class="filing-link" href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer">
+                桂ICP备2026014459号
+              </a>
+              <a
+                class="filing-link public-security-link"
+                href="https://beian.mps.gov.cn/#/query/webSearch?code=45012402000043"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <img src="@/assets/public-security-record.png" alt="" width="18" height="20" />
+                <span>桂公网安备45012402000043号</span>
+              </a>
+            </div>
           </footer>
         </section>
       </div>
@@ -201,13 +212,31 @@ const handleClick = (e) => {
       margin: 0;
     }
 
-    .icp-link {
+    .filing-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 8px 16px;
+    }
+
+    .filing-link {
       color: inherit;
       text-decoration: none;
       transition: color 0.2s ease;
 
       &:hover {
         color: #409eff;
+      }
+    }
+
+    .public-security-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+
+      img {
+        flex: 0 0 auto;
       }
     }
   }

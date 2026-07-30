@@ -8,6 +8,26 @@ export const notificationHero = ref({
 
 export const updateLog = ref([
   {
+    date: '2026-07-30',
+    sections: [
+      {
+        title: '公安联网备案正式接入',
+        items: [
+          '公安联网备案已审核通过，备案号为桂公网安备45012402000043号。',
+          '首页底部新增公安备案图标与查询链接，与 ICP 备案信息并列展示。',
+          '站点合规备案流程已完成，下一阶段转入 HTTPS 证书接入。'
+        ],
+        files: [
+          'src/views/home/HomeIndex.vue',
+          'src/assets/public-security-record.png',
+          'appendix/public_security/*',
+          'appendix/deployment-standard.md',
+          'appendix/update_log.md'
+        ]
+      }
+    ]
+  },
+  {
     date: '2026-07-09',
     sections: [
       {
