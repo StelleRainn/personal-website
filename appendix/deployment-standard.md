@@ -1,8 +1,8 @@
 # Portfolio Deployment Standard
 
-> 日期：2026-07-09
+> 日期：2026-08-04
 > 适用范围：个人网站、A Clock Inside The Rose，以及后续作为作品集子项目接入的前端或全栈项目。
-> 当前主入口：`http://stellerainn.com/`
+> 当前主入口：`http://stellerainn.com/`，HTTPS 接入配置已准备，等待 ECS 首次签发证书
 > 备用公网入口：`http://39.101.77.156/`
 > 已备案域名：`stellerainn.com`
 > ICP 备案号：`桂ICP备2026014459号`，审核通过日期：2026-07-08
@@ -19,7 +19,7 @@
 当前架构：
 
 ```text
-公网 IP / stellerainn.com
+公网 IP / stellerainn.com (HTTP/HTTPS)
   |
   v
 portfolio-gateway (Nginx)
@@ -57,6 +57,9 @@ Dockerfile
 nginx.conf
 docker-compose.yml
 deploy/edge-nginx.conf
+deploy/edge-nginx.bootstrap.conf
+deploy/portfolio-routes.conf
+deploy/certbot/
 appendix/cloud_migration_plan.md
 appendix/deployment-standard.md
 appendix/update_log.md
@@ -119,7 +122,7 @@ docker network create portfolio-public
 
 容器公网端口策略：
 
-- 只有 `portfolio-gateway` 绑定宿主机 `80`，未来再绑定 `443`。
+- 只有 `portfolio-gateway` 绑定宿主机 `80`/`443`。
 - 子项目容器使用 `expose`，不直接使用宿主机 `ports`。
 - 如果临时排障必须开放端口，排障后要恢复为仅内网暴露。
 
@@ -136,17 +139,19 @@ http://39.101.77.156/bilibili-imitation/ -> B 站首页复刻
 http://39.101.77.156/acir/dashboard   -> ACIR
 ```
 
-域名接入后的第一阶段：
+HTTPS 接入后的域名入口：
 
 ```text
-http://stellerainn.com/               -> 个人总站
-http://www.stellerainn.com/           -> 个人总站
-http://stellerainn.com/rosa-bookshelf/ -> 蔷薇丛的小书架
-http://stellerainn.com/shopping-mall/ -> 智慧商城
-http://stellerainn.com/xiaotuxian-pc/ -> 小兔鲜儿
-http://stellerainn.com/bilibili-imitation/ -> B 站首页复刻
-http://stellerainn.com/acir/dashboard -> ACIR
+https://stellerainn.com/               -> 个人总站
+https://www.stellerainn.com/           -> 个人总站
+https://stellerainn.com/rosa-bookshelf/ -> 蔷薇丛的小书架
+https://stellerainn.com/shopping-mall/ -> 智慧商城
+https://stellerainn.com/xiaotuxian-pc/ -> 小兔鲜儿
+https://stellerainn.com/bilibili-imitation/ -> B 站首页复刻
+https://stellerainn.com/acir/dashboard -> ACIR
 ```
+
+域名的 HTTP 请求统一使用 `301` 跳转到 HTTPS。公网 IP 继续保留 HTTP 入口，用于证书异常或网关排障，不将 IP 跳转到域名证书。
 
 暂不把 `acir.stellerainn.com` 作为第一阶段入口。原因是 ACIR 当前前端按 `VITE_PUBLIC_BASE_URL=/acir/` 构建，路径入口已经验证通过；子域名入口更适合在后续将 ACIR 前端基准路径切回 `/` 后再启用。
 
@@ -408,18 +413,64 @@ ICP备案与公安联网备案均已完成。网站首页底部需要长期保�
 1. ICP 备案号 `桂ICP备2026014459号`，链接至工信部备案查询网站。
 2. 公安备案号 `桂公网安备45012402000043号`，连同备案图标链接至公安备案查询页面。
 
-当前剩余事项是在域名访问稳定后接入 HTTPS。
+当前采用 `Nginx + Certbot + Let's Encrypt`：保留现有 gateway，由 Certbot 使用 HTTP-01 webroot 校验申请和续期证书。80 端口长期保留，用于 ACME 校验和域名到 HTTPS 的跳转；443 端口承载正式域名流量。
 
-HTTPS 可选方案：
-
-- Nginx + Certbot：保留当前 gateway，新增证书挂载和 `443` server。
-- Caddy：未来将 gateway 替换为 Caddy，自动申请和续期证书。
-- 阿里云 SSL/CDN：将 HTTPS 放到阿里云边缘产品，ECS 仍作为源站。
-
-当前阶段推荐推进：
+HTTPS 相关文件：
 
 ```text
-HTTPS 证书接入 -> HTTP 自动跳转 HTTPS
+deploy/edge-nginx.bootstrap.conf       首次签发前的 HTTP 网关
+deploy/edge-nginx.conf                 正式 HTTP/HTTPS 网关
+deploy/portfolio-routes.conf           HTTP 与 HTTPS 共用的项目路由
+deploy/certbot/issue-certificate.sh    首次签发并切换 HTTPS
+deploy/certbot/renew-certificate.sh    续期并重载 Nginx
+deploy/certbot/conf/                   ECS 本地证书与私钥，不进入 Git
+deploy/certbot/www/                    ACME webroot 临时文件，不进入 Git
+```
+
+首次接入前，在阿里云安全组确认 TCP `443` 入方向已放行；TCP `80` 继续保留。然后在 ECS 拉取最新代码并执行：
+
+```bash
+cd /opt/personal-website
+git pull
+chmod +x deploy/certbot/issue-certificate.sh deploy/certbot/renew-certificate.sh
+./deploy/certbot/issue-certificate.sh <证书通知邮箱>
+```
+
+脚本执行顺序：
+
+```text
+以 bootstrap 配置重建 gateway
+  -> Certbot 校验 stellerainn.com 与 www.stellerainn.com
+  -> 证书写入 deploy/certbot/conf
+  -> 以正式配置重建 gateway
+  -> nginx -t
+```
+
+如果证书签发失败，gateway 会停留在 bootstrap HTTP 配置，网站仍可通过 HTTP 访问。排除 DNS、80 端口或频率限制问题后重新执行签发脚本即可。
+
+签发成功后验证：
+
+```bash
+curl -I http://stellerainn.com/
+curl -I https://stellerainn.com/
+curl -I https://www.stellerainn.com/
+curl -I https://stellerainn.com/acir/dashboard
+docker exec portfolio-gateway nginx -t
+```
+
+预期：域名 HTTP 返回 `301` 并跳转到同路径 HTTPS；HTTPS 返回正常页面；公网 IP 的 HTTP 访问仍然可用。
+
+证书续期测试：
+
+```bash
+cd /opt/personal-website
+./deploy/certbot/renew-certificate.sh --dry-run
+```
+
+测试通过后，在 ECS root 用户的 crontab 中加入每天两次检查。Certbot 只会在证书接近到期时真正续期：
+
+```cron
+17 3,15 * * * cd /opt/personal-website && ./deploy/certbot/renew-certificate.sh >> /var/log/portfolio-certbot.log 2>&1
 ```
 
 ## 9. 新项目接入清单

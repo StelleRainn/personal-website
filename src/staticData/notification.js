@@ -8,6 +8,28 @@ export const notificationHero = ref({
 
 export const updateLog = ref([
   {
+    date: '2026-08-04',
+    sections: [
+      {
+        title: 'HTTPS 接入准备',
+        items: [
+          '入口网关已完成 443、TLS 与域名 HTTP 自动跳转配置。',
+          '新增 Certbot 首次签发和自动续期流程，证书私钥仅保存在 ECS。',
+          '公网 IP 继续保留 HTTP 排障入口，各作品路径与 ACIR 共用同一套 HTTPS 路由。'
+        ],
+        files: [
+          'docker-compose.yml',
+          'deploy/edge-nginx.conf',
+          'deploy/edge-nginx.bootstrap.conf',
+          'deploy/portfolio-routes.conf',
+          'deploy/certbot/*',
+          'appendix/deployment-standard.md',
+          'appendix/update_log.md'
+        ]
+      }
+    ]
+  },
+  {
     date: '2026-07-30',
     sections: [
       {

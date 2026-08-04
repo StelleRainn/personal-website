@@ -30,3 +30,7 @@ coverage
 *.tsbuildinfo
 
 .obsidian
+
+# Certbot runtime data and private keys
+/deploy/certbot/conf/
+/deploy/certbot/www/
