@@ -2,13 +2,15 @@
 
 ## 2026-08-04
 
-### HTTPS 接入配置
+### HTTPS 正式接入
 
+- `stellerainn.com` 与 `www.stellerainn.com` 的 Let's Encrypt 证书已成功签发，HTTPS 于 2026-08-04 正式上线。
 - 入口网关新增 `443` 端口、TLS 配置和域名 HTTP 到 HTTPS 的 `301` 跳转；公网 IP 继续保留 HTTP 排障入口。
 - 将各项目的代理规则拆入共享路由片段，使 HTTP fallback 与 HTTPS 使用同一套路由配置。
 - 新增 Certbot bootstrap 配置、首次证书签发脚本和续期脚本；证书私钥与 ACME 临时文件仅保存在 ECS，不进入 Git。
 - 首次签发失败时 gateway 会保留 HTTP bootstrap 服务，避免证书缺失导致总站和子项目同时离线。
 - 更新部署维护手册，记录安全组、首次签发、验证、续期测试和 crontab 配置步骤。
+- 本机与 ECS 验证通过：两个域名均返回 HTTP/2 200，HTTP 正确跳转 HTTPS，ACIR 深层路由可正常访问，Nginx 配置检查成功。
 - 改动文件：`.gitignore`、`docker-compose.yml`、`deploy/edge-nginx.conf`、`deploy/edge-nginx.bootstrap.conf`、`deploy/portfolio-routes.conf`、`deploy/certbot/*`、`src/staticData/notification.js`、`appendix/deployment-standard.md`、`appendix/update_log.md`
 
 ## 2026-07-30

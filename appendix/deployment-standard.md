@@ -2,7 +2,7 @@
 
 > 日期：2026-08-04
 > 适用范围：个人网站、A Clock Inside The Rose，以及后续作为作品集子项目接入的前端或全栈项目。
-> 当前主入口：`http://stellerainn.com/`，HTTPS 接入配置已准备，等待 ECS 首次签发证书
+> 当前主入口：`https://stellerainn.com/`
 > 备用公网入口：`http://39.101.77.156/`
 > 已备案域名：`stellerainn.com`
 > ICP 备案号：`桂ICP备2026014459号`，审核通过日期：2026-07-08
@@ -414,6 +414,16 @@ ICP备案与公安联网备案均已完成。网站首页底部需要长期保�
 2. 公安备案号 `桂公网安备45012402000043号`，连同备案图标链接至公安备案查询页面。
 
 当前采用 `Nginx + Certbot + Let's Encrypt`：保留现有 gateway，由 Certbot 使用 HTTP-01 webroot 校验申请和续期证书。80 端口长期保留，用于 ACME 校验和域名到 HTTPS 的跳转；443 端口承载正式域名流量。
+
+HTTPS 已于 2026-08-04 正式上线，首次签发与切换验证结果：
+
+```text
+http://stellerainn.com/                -> 301 https://stellerainn.com/
+https://stellerainn.com/               -> HTTP/2 200
+https://www.stellerainn.com/           -> HTTP/2 200
+https://stellerainn.com/acir/dashboard -> HTTP/2 200
+portfolio-gateway nginx -t             -> successful
+```
 
 HTTPS 相关文件：
 

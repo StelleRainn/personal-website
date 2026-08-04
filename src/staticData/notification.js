@@ -11,9 +11,10 @@ export const updateLog = ref([
     date: '2026-08-04',
     sections: [
       {
-        title: 'HTTPS 接入准备',
+        title: 'HTTPS 正式接入',
         items: [
-          '入口网关已完成 443、TLS 与域名 HTTP 自动跳转配置。',
+          'stellerainn.com 与 www.stellerainn.com 已于 2026-08-04 正式启用 HTTPS。',
+          '入口网关已启用 443、TLS 与域名 HTTP 自动跳转。',
           '新增 Certbot 首次签发和自动续期流程，证书私钥仅保存在 ECS。',
           '公网 IP 继续保留 HTTP 排障入口，各作品路径与 ACIR 共用同一套 HTTPS 路由。'
         ],
